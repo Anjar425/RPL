@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Medicine;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,9 +17,14 @@ class MedicineController extends Controller
         // if(Auth::guard('admin')->check()){
         // $userId = Auth::guard('admin')->user()->id;
         // $medicines = Medicine::where('admin_cashiers_id',$userId)->get();
-        $medicines = Medicine::all();
-        return view('AdminCashier.Medicine.index', compact('medicines'));
-        // }
+        if (Auth::guard('admin')->check()) {
+            $medicines = Medicine::all();
+            return view('AdminCashier.Medicine.index', compact('medicines'));
+        } else if (Auth::guard('cashier')->check()){
+            $medicines = Medicine::all();
+            return view('Cashier.Medicine.index', compact('medicines'));
+        }
+        return redirect('/');
     }
 
     /**
@@ -133,4 +139,41 @@ class MedicineController extends Controller
         session()->flash('success', 'Delete Data Successfully!');
         return redirect('admin/medicines');
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('q');
+
+        // Lakukan pencarian berdasarkan nama obat atau deskripsi obat
+        $medicines = Medicine::where('name', 'like', '%' . $query . '%')
+            ->orWhere('desc', 'like', '%' . $query . '%')
+            ->get();
+
+        // Format data hasil pencarian sesuai kebutuhan
+        $results = [];
+        foreach ($medicines as $medicine) {
+            $results[] = [
+                'id' => $medicine->id,
+                'name' => $medicine->name,
+                'desc' => $medicine->desc,
+                'selling_price' => $medicine->selling_price,
+                'expire' => $medicine->expire,
+                'image' => $medicine->image,
+                'delete_url' => url('admin/' . $medicine->id . '/delete-medicine'), // URL untuk menghapus obat
+            ];
+        }
+
+        return response()->json($results);
+    }
+
+    public function expireMedicine()
+    {
+        $today = Carbon::today();
+
+        $expireMedicine = Medicine::whereDate('expire', $today)->get();
+
+        return view('AdminCashier.ExpireMedicine.index', compact('expireMedicine'));
+    }
+
+    
 }

@@ -11,14 +11,21 @@ class Cashier extends Authenticatable
 {
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $table = 'cashiers';
+    protected $fillable = [
+        'admin_cashiers_id',
+        'name',
+        'email',
+        'password',
+        'visible_password',
+    ];
 
-    protected $primaryKey = 'id';
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
-    protected $fillable = ['admin_cashiers_id', 'name', 'email', 'password'];
-
-    public function adminCashier()
+    public function admin()
     {
-        return $this->belongsTo(AdminCashier::class, 'admin_cashiers_id');
+        return $this->belongsTo(AdminCashier::class);
     }
 }

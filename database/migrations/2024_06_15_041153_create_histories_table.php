@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cashiers', function (Blueprint $table) {
+        Schema::create('histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('admin_cashiers_id')->constrained()->onDelete('cascade');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('visible_password');
-            $table->rememberToken();
+            $table->date('date');
+            $table->enum('type', ['In', 'Out', 'None']);
+            $table->integer('amount');
+            $table->decimal('price', 8, 2);
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cashiers');
+        Schema::dropIfExists('histories');
     }
 };

@@ -10,15 +10,18 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminCashierController extends Controller
 {
-    public function loginForm(){
+    public function loginForm()
+    {
         return view('AdminCashier.login');
     }
 
-    public function registerForm() {
+    public function registerForm()
+    {
         return view('AdminCashier.register');
     }
 
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         $request->validate([
             'email' => 'required',
             'password' => 'required'
@@ -38,22 +41,22 @@ class AdminCashierController extends Controller
         }
 
         return redirect()->intended('admin/register')->withSuccess('Logged in Failed');
-
     }
 
-    public function register (Request $request) {
-        $validator = Validator::make($request -> all(), [
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|unique:admin_cashiers',
             'password' => 'required',
             'password_confirm' => 'required|same:password'
         ]);
 
-        if($validator -> fails()){
+        if ($validator->fails()) {
             dd($validator->errors());
-                }
+        }
 
-        $input = $request -> all();
+        $input = $request->all();
         $input['password'] = bcrypt($input['password']);
 
         $admin = AdminCashier::create($input);
@@ -61,6 +64,19 @@ class AdminCashierController extends Controller
         event(new Registered($admin));
 
         return redirect('/admin/login');
+    }
+
+    public function logout (Request $request) {
+        if (Auth::guard('admin')->check()){
+            Auth::guard('admin')->logout();
+        } else if (Auth::guard('cashier')->check()){
+            Auth::guard('cashier')->logout();
+        }
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/')->withSuccess('Logged out successfully');
     }
     /**
      * Display a listing of the resource.
