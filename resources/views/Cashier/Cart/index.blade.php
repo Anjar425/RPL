@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <h1 class="text-center font-bold text-3xl py-4">Cashiers List</h1>
+    <h1 class="text-center font-bold text-3xl py-4">Cart List</h1>
     <div class="flex flex-col justify-between w-full overflow-y-scroll" style="height: 85vh">
         <table class="table-auto w-full mt-1 overscroll-x-auto border-[1px] border-black mb-10">
             <thead>
