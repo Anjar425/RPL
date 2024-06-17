@@ -20,6 +20,8 @@ class AdminCashierController extends Controller
         return view('AdminCashier.register');
     }
 
+
+
     public function login(Request $request)
     {
         $request->validate([
@@ -66,10 +68,11 @@ class AdminCashierController extends Controller
         return redirect('/admin/login');
     }
 
-    public function logout (Request $request) {
-        if (Auth::guard('admin')->check()){
+    public function logout(Request $request)
+    {
+        if (Auth::guard('admin')->check()) {
             Auth::guard('admin')->logout();
-        } else if (Auth::guard('cashier')->check()){
+        } else if (Auth::guard('cashier')->check()) {
             Auth::guard('cashier')->logout();
         }
 

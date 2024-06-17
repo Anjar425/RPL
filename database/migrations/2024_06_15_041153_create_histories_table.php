@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('histories', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('medicine_id')->nullable()->constrained()->onDelete('set null');
             $table->date('date');
-            $table->enum('type', ['In', 'Out', 'None']);
+            $table->enum('type', ['In', 'Out']);
             $table->integer('amount');
-            $table->decimal('price', 8, 2);
+            $table->float('price');
             $table->timestamps();
         });
     }

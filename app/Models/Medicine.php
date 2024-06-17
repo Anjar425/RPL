@@ -28,4 +28,9 @@ class Medicine extends Model
     {
         return $this->belongsTo(AdminCashier::class, 'admin_cashiers_id');
     }
+
+    public function history()
+    {
+        return $this->hasMany(History::class);
+    }
 }

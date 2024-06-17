@@ -30,6 +30,7 @@ Route::middleware('auth:admin')->group(function () {
         Route::post('/admin/insert-medicine', 'store');
         Route::post('/admin/{id}/update-medicine', 'update');
         Route::post('/admin/{id}/delete-medicine', 'destroy');
+        Route::get('/admin/{id}/detail-medicine', 'show');
 
         Route::get('/search', 'search');
 
@@ -44,7 +45,7 @@ Route::middleware('auth:admin')->group(function () {
         Route::post('/admin/{id}/delete-cashier', 'destroy');
     });
 
-    Route::get('/admin/history', [HistoryController::class, 'index'])->name('history.index');
+    Route::get('/admin/report', [HistoryController::class, 'index'])->name('history.index');
 });
 
 Route::post('/logout', [AdminCashierController::class, 'logout']);

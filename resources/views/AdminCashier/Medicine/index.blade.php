@@ -21,6 +21,7 @@
                     <p class="text-center text-gray-700 text-base">Tanggal Kadaluarsa: {{ $m->expire }}</p>
                 </div>
                 <div class="px-6 py-4 justify-center flex flex-row">
+                    <button onclick="location.href='/admin/{{ $m->id }}/detail-medicine'" class="bg-green-500 hover:bg-green-700 text-white font-bold w-24 py-2 px-4 rounded mr-2">Detail</button>
                     <button onclick="openEditModal('{{ $m->id }}')"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold w-24 py-2 px-4 rounded mr-2">Edit</button>
                     <button onclick="openDeleteModal('{{ url('/'.'admin/' . $m->id . '/delete-medicine') }}')" class="bg-red-500 hover:bg-red-700 text-white font-bold w-24 py-2 px-4 rounded">Delete</button>
@@ -33,15 +34,15 @@
     <script>
         const searchInput = document.getElementById('search');
         const initialList = {!! json_encode($medicines) !!}; // Data obat awal dari Blade
-    
+
         searchInput.addEventListener('input', function () {
             const query = this.value.trim(); // Mendapatkan nilai input, tanpa spasi di awal dan akhir
-    
+
             if (query.length === 0) {
                 showInitialList();
                 return;
             }
-    
+
             // Kirim permintaan AJAX ke endpoint pencarian
             fetch(`/search?q=${query}`)
                 .then(response => response.json())
@@ -49,7 +50,7 @@
                     // Membuat tampilan hasil pencarian berdasarkan data yang diterima
                     const resultDiv = document.getElementById('result');
                     resultDiv.innerHTML = ''; // Bersihkan konten sebelum menambahkan hasil baru
-    
+
                     data.forEach(medicine => {
                         const html = `
                             <div id="result-item" class="w-80 rounded overflow-hidden shadow-lg bg-white">
@@ -75,11 +76,11 @@
                     console.error('Error fetching search results:', error);
                 });
         });
-    
+
         function showInitialList() {
             const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = ''; // Bersihkan konten sebelum menambahkan hasil baru
-    
+
             initialList.forEach(medicine => {
                 const html = `
                     <div id="result-item" class="w-80 rounded overflow-hidden shadow-lg bg-white">

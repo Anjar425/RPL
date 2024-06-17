@@ -20,6 +20,9 @@
                         <p class=" text-center text-gray-700 text-base ">Harga: {{ $m->selling_price }}</p>
                         <p class="text-center text-gray-700 text-base">Tanggal Kadaluarsa: {{ $m->expire }}</p>
                     </div>
+                    <div class="px-6 py-4 justify-center flex flex-row">
+                        <button onclick="openDeleteModal('{{ url('/'.'admin/' . $m->id . '/delete-medicine') }}')" class="bg-red-500 hover:bg-red-700 text-white font-bold w-24 py-2 px-4 rounded">Delete</button>
+                    </div>
                 </div>
             @endforeach
     @endif

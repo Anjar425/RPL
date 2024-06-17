@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <!-- Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    @vite('resources/css/app.css')
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 </head>
@@ -40,7 +40,8 @@
                             class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden"
                             aria-labelledby="user-menu" role="menu">
                             @csrf
-                            <button type="submit" class="w-full h-full block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            <button type="submit"
+                                class="w-full h-full block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                 role="menuitem">Logout</button>
                         </form>
                     </div>
@@ -54,6 +55,7 @@
     </div>
     @yield('Insert Modal')
     @yield('Edit Modal')
+    @yield('Cart Modal')
     @include('layout.delete')
 
     <script>
@@ -124,11 +126,25 @@
             closeDeleteModal();
         }
 
+        const openCartModal = () => {
+            var modal = document.getElementById("cart-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        };
+
+        // Close Modal Cart
+        const closeCartModal = () => {
+            var modal = document.getElementById("cart-modal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        };
+
 
         window.addEventListener('click', function(event) {
             var insertModal = document.getElementById('insertModal');
             var deleteModal = document.getElementById('deleteModal');
             var profileItem = document.getElementById('profile-item');
+            var cartModal = document.getElementById("cart-modal");
             var editModalPrefix = "editModal";
 
             if (event.target === insertModal) {
@@ -141,6 +157,10 @@
 
             if (event.target === deleteModal) {
                 closeDeleteModal();
+            }
+
+            if (event.target === cartModal) {
+                closeCartModal();
             }
 
             if (event.target.id.startsWith(editModalPrefix)) {

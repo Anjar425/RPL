@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\History;
 use App\Models\Medicine;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class MedicineController extends Controller
         if (Auth::guard('admin')->check()) {
             $medicines = Medicine::all();
             return view('AdminCashier.Medicine.index', compact('medicines'));
-        } else if (Auth::guard('cashier')->check()){
+        } else if (Auth::guard('cashier')->check()) {
             $medicines = Medicine::all();
             return view('Cashier.Medicine.index', compact('medicines'));
         }
@@ -49,9 +50,11 @@ class MedicineController extends Controller
         } else {
             // Get the authenticated admin cashier's ID
 
+            $adminID = Auth::guard('admin')->id();
+
             // Create a new Medicine instance and fill it with data
             $data = new Medicine();
-            $data->admin_cashiers_id = 1;
+            $data->admin_cashiers_id = $adminID;
             $data->name = $request->name;
             $data->desc = $request->desc;
             $data->expire = $request->expire;
@@ -70,6 +73,15 @@ class MedicineController extends Controller
             // Save the new medicine record to the database
             $data->save();
 
+
+            $history = new History();
+            $history->medicine_id = $data->id;
+            $history->date = now(); // Set the current date
+            $history->type = 'Out';
+            $history->amount = $data->stock;
+            $history->price = $data->purchase_price * $data->stock;
+            $history->save();
+
             session()->flash('success', 'Save Data Successfully!');
             return redirect('/admin/medicines');
         }
@@ -78,9 +90,10 @@ class MedicineController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Medicine $medicine)
+    public function show($id)
     {
-        //
+        $medicine = Medicine::findOrFail($id);
+        return view('AdminCashier.Medicine.detail', compact('medicine'));
     }
 
     /**
@@ -98,6 +111,16 @@ class MedicineController extends Controller
     {
         // Find the existing medicine record by ID
         $data = Medicine::where('id', $id)->first();
+
+        if ($data->stock < $request->stock) {
+            $history = new History();
+            $history->medicine_id = $id;
+            $history->date = now(); // Set the current date
+            $history->type = 'Out';
+            $history->amount = $data->stock;
+            $history->price = $data->purchase_price * $data->stock;
+            $history->save();
+        }
 
         // Update the medicine record with the new data from the request
         $data->name = $request->name;
@@ -175,5 +198,7 @@ class MedicineController extends Controller
         return view('AdminCashier.ExpireMedicine.index', compact('expireMedicine'));
     }
 
-    
+    public function detail()
+    {
+    }
 }

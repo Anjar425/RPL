@@ -7,17 +7,17 @@
 @section('content')
     <h1 class="text-center font-bold text-3xl py-4">Cart List</h1>
     <div class="flex flex-col justify-between w-full overflow-y-scroll" style="height: 85vh">
-        <table class="table-auto w-full mt-1 overscroll-x-auto border-[1px] border-black mb-10">
+        <table class="table-auto w-full mt-1 overscroll-x-auto mb-10">
             <thead>
                 <tr>
-                    <th class="py-2 px-2 border-b-[1px] text-sm border-b-gray-800 font-semibold text-gray-700">Id</th>
-                    <th class="py-2 px-2 border-b-[1px] text-sm border-b-gray-800 font-semibold text-gray-700">Name</th>
-                    <th class="py-2 border-b-[1px] text-sm border-b-gray-800 font-semibold text-gray-700">Description</th>
-                    <th class="py-2 border-b-[1px] text-sm border-b-gray-800 font-semibold text-gray-700">Expire</th>
-                    <th class="py-2 border-b-[1px] text-sm border-b-gray-800 font-semibold text-gray-700">Price</th>
-                    <th class="py-2 border-b-[1px] text-sm border-b-gray-800 font-semibold text-gray-700">Quantity</th>
-                    <th class="py-2 border-b-[1px] text-sm border-b-gray-800 font-semibold text-gray-700">Total Price</th>
-                    <th class="py-2 border-b-[1px] text-sm border-b-gray-800 font-semibold text-gray-700">Action</th>
+                    <th class="py-2 px-2 border-b-2 text-sm border-b-gray-800 font-semibold text-gray-700">Id</th>
+                    <th class="py-2 px-2 border-b-2 text-sm border-b-gray-800 font-semibold text-gray-700">Name</th>
+                    <th class="py-2 border-b-2 text-sm border-b-gray-800 font-semibold text-gray-700">Description</th>
+                    <th class="py-2 border-b-2 text-sm border-b-gray-800 font-semibold text-gray-700">Expire</th>
+                    <th class="py-2 border-b-2 text-sm border-b-gray-800 font-semibold text-gray-700">Price</th>
+                    <th class="py-2 border-b-2 text-sm border-b-gray-800 font-semibold text-gray-700">Quantity</th>
+                    <th class="py-2 border-b-2 text-sm border-b-gray-800 font-semibold text-gray-700">Total Price</th>
+                    <th class="py-2 border-b-2 text-sm border-b-gray-800 font-semibold text-gray-700">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -61,7 +61,7 @@
             <h2 class="text-center font-semibold text-md total-cost-value">Rp{{ $totalCost }}</h2>
         </div>
         <div>
-            <button class="py-2 px-8 bg-green-500 rounded-lg ">Sell</button>
+            <button class="py-2 px-8 bg-green-500 rounded-lg " onclick="openCartModal()">Sell</button>
         </div>
     </div>
 
@@ -120,6 +120,15 @@
                     }
                     // Update total cost
                     document.querySelector('.total-cost-value').textContent = `Rp${data.totalCost}`;
+
+                    const div = document.querySelector(`div[data-product-id="${productId}"]`);
+                    if (div) {
+                        div.querySelector('.quantity-input').textContent = `Jumlah Beli : ${quantity}`;
+                        div.querySelector('.total-cost').textContent = `Total Harga : Rp${data.updatedItem.totalCost}`;
+                    }
+                    // Update total cost
+                    document.querySelector('.total-cost-value').textContent = `Rp${data.totalCost}`;
+
                     // Tambahkan logika lain jika perlu, seperti memperbarui tampilan atau menghapus item dari DOM
                 })
                 .catch(error => {
@@ -127,4 +136,9 @@
                 });
         }
     </script>
+@endsection
+
+
+@section('Cart Modal')
+    @include('Cashier.Cart.modal')
 @endsection
