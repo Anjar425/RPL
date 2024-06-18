@@ -14,9 +14,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::middleware('guest')->group(function () {
     Route::get('/admin/login', [AdminCashierController::class, 'loginForm'])->name('admin.login');
-    Route::get('/admin/register', [AdminCashierController::class, 'registerForm']);
+    Route::get('/admin/register', [AdminCashierController::class, 'registerForm'])->name('registerForm');
+    // Route::get('/admin/register', [AdminCashierController::class, 'register_Form'])->name('register_Form');
 
     Route::post('/admin/register', [AdminCashierController::class, 'register']);
     Route::post('/admin/login', [AdminCashierController::class, 'login']);
@@ -29,7 +31,9 @@ Route::middleware('auth:admin')->group(function () {
         Route::get('/admin/medicines', 'index');
         Route::post('/admin/insert-medicine', 'store');
         Route::post('/admin/{id}/update-medicine', 'update');
-        Route::post('/admin/{id}/delete-medicine', 'destroy');
+        Route::post('/admin/{id}/delete-medicine', 'destrphp artisan config:cache
+php artisan view:cache
+php artisan route:cacheoy');
         Route::get('/admin/{id}/detail-medicine', 'show');
 
         Route::get('/search', 'search');

@@ -20,7 +20,10 @@ class AdminCashierController extends Controller
         return view('AdminCashier.register');
     }
 
-
+    // public function register_Form()
+    // {
+    //     return view('AdminCashier.registerdua');
+    // }
 
     public function login(Request $request)
     {
