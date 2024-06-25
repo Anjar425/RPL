@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cashier;
+use App\Models\History;
 use App\Models\Medicine;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -127,5 +129,41 @@ class CartController extends Controller
         session()->put('cart', $cartItems);
 
         return response()->json(['success' => true, 'message' => 'Produk berhasil dihapus dari keranjang']);
+    }
+
+    public function checkout(Request $request)
+    {
+        $cartItems = session()->get('cart', []);
+
+        if (empty($cartItems)) {
+            return redirect('/cashier/cart');
+        }
+
+        foreach ($cartItems as $item) {
+            $product = Medicine::findOrFail($item['id']);
+
+            // Validasi stok
+            if ($item['quantity'] > $product->stock) {
+                return response()->json(['success' => false, 'message' => 'Stok tidak mencukupi untuk produk: ' . $product->name], 400);
+            }
+
+            // Kurangi stok
+            $product->stock -= $item['quantity'];
+            $product->save();
+
+            // Simpan ke History
+            History::create([
+                'medicine_id' => $item['id'],
+                'date' => Carbon::now(),
+                'type' => 'In',
+                'amount' => $item['quantity'],
+                'price' => $item['selling_price'] * $item['quantity'] ,
+            ]);
+        }
+
+        // Kosongkan keranjang setelah checkout
+        session()->forget('cart');
+
+        return redirect('/cashier/cart');
     }
 }

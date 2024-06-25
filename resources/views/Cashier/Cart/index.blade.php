@@ -42,7 +42,7 @@
                         </td>
                         <td
                             class="p-2 text-center border-b-[1px] text-xs border-b-gray-700 font-normal text-gray-700 total-cost">
-                            {{ $item['totalCost'] }}</td>
+                            Rp{{ number_format($item['totalCost'], 2, ',', '.') }}</td>
 
                         <td class="p-2 text-center border-b-[1px] text-xs border-b-gray-700 font-normal text-gray-700">
                             <div class="flex flex-row gap-x-2 justify-center">
@@ -58,10 +58,10 @@
     <div class="sticky h-20 w-full items-center flex flex-row justify-end my-2 mx-4 gap-6">
         <div class="flex flex-col ">
             <h1 class="text-center font-bold text-lg">Total Cost</h1>
-            <h2 class="text-center font-semibold text-md total-cost-value">Rp{{ $totalCost }}</h2>
+            <h2 class="text-center font-semibold text-md total-cost-value">Rp{{ number_format($totalCost, 2, ',', '.') }}</h2>
         </div>
         <div>
-            <button class="py-2 px-8 bg-green-500 rounded-lg " onclick="openCartModal()">Sell</button>
+            <a href="/cart/sell"><button class="py-2 px-8 bg-green-500 rounded-lg ">Sell</button></a>
         </div>
     </div>
 
@@ -116,18 +116,18 @@
                     const row = document.querySelector(`tr[data-product-id="${productId}"]`);
                     if (row) {
                         row.querySelector('.quantity-input').value = quantity;
-                        row.querySelector('.total-cost').textContent = data.updatedItem.totalCost;
+                        row.querySelector('.total-cost').textContent = data.updatedItem.totalCost.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
                     }
                     // Update total cost
-                    document.querySelector('.total-cost-value').textContent = `Rp${data.totalCost}`;
+                    document.querySelector('.total-cost-value').textContent = data.totalCost.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
 
                     const div = document.querySelector(`div[data-product-id="${productId}"]`);
                     if (div) {
                         div.querySelector('.quantity-input').textContent = `Jumlah Beli : ${quantity}`;
-                        div.querySelector('.total-cost').textContent = `Total Harga : Rp${data.updatedItem.totalCost}`;
+                        div.querySelector('.total-cost').textContent = `Total Harga : ${data.updatedItem.totalCost.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`;
                     }
                     // Update total cost
-                    document.querySelector('.total-cost-value').textContent = `Rp${data.totalCost}`;
+                    document.querySelector('.total-cost-value').textContent = data.totalCost.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
 
                     // Tambahkan logika lain jika perlu, seperti memperbarui tampilan atau menghapus item dari DOM
                 })

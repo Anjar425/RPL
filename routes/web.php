@@ -62,4 +62,7 @@ Route::middleware('auth:cashier')->group(function () {
     Route::post('/cashier/addCart', [CartController::class, 'saveCart'])->name('addToCart');
     Route::post('/cart/update', [CartController::class, 'update']);
     Route::post('/cart/delete', [CartController::class, 'delete']);
+    Route::get('/cart/sell', [CartController::class, 'checkout']);
+
+
 });
