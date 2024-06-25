@@ -57,10 +57,6 @@ class AdminCashierController extends Controller
             'password_confirm' => 'required|same:password'
         ]);
 
-        if ($validator->fails()) {
-            dd($validator->errors());
-        }
-
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
 
