@@ -46,7 +46,7 @@
 
                         <td class="p-2 text-center border-b-[1px] text-xs border-b-gray-700 font-normal text-gray-700">
                             <div class="flex flex-row gap-x-2 justify-center">
-                                <button><i class="fa-solid fa-x fa-xl" style="color: #ff0000;"></i>
+                                <button onclick="deleteCartItem('{{ $item['id'] }}')"><i class="fa-solid fa-x fa-xl" style="color: #ff0000;"></i>
                                 </button>
                             </div>
                         </td>
@@ -130,6 +130,35 @@
                     document.querySelector('.total-cost-value').textContent = `Rp${data.totalCost}`;
 
                     // Tambahkan logika lain jika perlu, seperti memperbarui tampilan atau menghapus item dari DOM
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+        }
+
+        // Hapus item dari keranjang belanja
+        function deleteCartItem(productId) {
+            console.log(productId);
+            fetch('/cart/delete', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+
+                    body: JSON.stringify({
+                        product_id: productId
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data); // Tampilkan pesan sukses atau pesan error
+                    // Tambahkan logika lain jika perlu, seperti menghapus item dari DOM
                 })
                 .catch(error => {
                     console.error('There has been a problem with your fetch operation:', error);
