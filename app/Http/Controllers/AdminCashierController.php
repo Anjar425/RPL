@@ -42,7 +42,7 @@ class AdminCashierController extends Controller
             // Store the token for later use, if needed
             session(['token' => $token]);
 
-            return redirect()->intended('/dashboard')->withSuccess('Logged in successfully');
+            return redirect()->intended('/admin/medicines')->withSuccess('Logged in successfully');
         }
 
         return redirect()->intended('admin/register')->withSuccess('Logged in Failed');

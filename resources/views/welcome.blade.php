@@ -187,12 +187,12 @@
                             <div class="col-md-5 mb-3 login-box d-flex flex-column align-items-center">
                                 <h3>Login as Admin</h3>
                                 <img src="{{ asset('images/logo_5.png') }}" alt="Logo 1" class="img-fluid hover-animate" style="width: 25%; margin-top: 10px; margin-bottom: 10px;">
-                                <a href="#" class="btn btn-primary mt-2"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+                                <a href="/admin/login" class="btn btn-primary mt-2"><i class="bi bi-box-arrow-in-right"></i> Login</a>
                             </div>
                             <div class="col-md-5 mb-3 login-box d-flex flex-column align-items-center">
                                 <h3>Login as Kasir</h3>
                                 <img src="{{ asset('images/logo_5.png') }}" alt="Logo 1" class="img-fluid hover-animate" style="width: 25%; margin-top: 10px; margin-bottom: 10px;">
-                                <a href="#" class="btn btn-primary mt-2"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+                                <a href="/cashier/login" class="btn btn-primary mt-2"><i class="bi bi-box-arrow-in-right"></i> Login</a>
                             </div>
                         </div>
                     </div>

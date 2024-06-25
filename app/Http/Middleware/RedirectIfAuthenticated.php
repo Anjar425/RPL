@@ -22,7 +22,7 @@ class RedirectIfAuthenticated
 
 
         if (Auth::guard('admin')->check()) {
-            return redirect("admin/dashboard"); // Menggunakan double quotes agar variabel $guard dievaluasi
+            return redirect("admin/medicines"); // Menggunakan double quotes agar variabel $guard dievaluasi
         } else if (Auth::guard('cashier')->check()) {
             return redirect("cashier/medicines"); // Menggunakan double quotes agar variabel $guard dievaluasi
 
