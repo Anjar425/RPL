@@ -18,7 +18,74 @@ class UsersTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-           
+            [
+                'name' => 'eko',
+                'email' => 'ekoginanjar@gmail.com',
+                'password' => Hash::make('echoginanj'),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'zidan',
+                'email' => 'zidan@gmail.com',
+                'password' => Hash::make('fireflymywife'),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'irfan',
+                'email' => 'irfan@gmail.com',
+                'password' => Hash::make('irfanadipa'),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'hajid',
+                'email' => 'hajid@gmail.com',
+                'password' => Hash::make('hidayamto'),
+                'visible_password' => 'hidayamto',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'fathin',
+                'email' => 'fathin@gmail.com',
+                'password' => Hash::make('wongsolo'),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'cahyo',
+                'email' => 'cahyo@gmail.com',
+                'password' => Hash::make('codingismylife'),
+                'visible_password' => 'codingismylife',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'mahawani',
+                'email' => 'maharani@gmail.com',
+                'password' => Hash::make('ilikewhatilike'),
+                'visible_password' => 'ilikewhatilike',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'affani',
+                'email' => 'affani@gmail.com',
+                'password' => Hash::make('danaaffani'),
+                'visible_password' => 'danaaffani',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'achmad',
+                'email' => 'achmad@gmail.com',
+                'password' => Hash::make('porsche'),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            // Anda bisa menambahkan data lain di sini
         ]);
     }
 }
