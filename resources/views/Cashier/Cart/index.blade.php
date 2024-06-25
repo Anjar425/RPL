@@ -46,8 +46,8 @@
 
                         <td class="p-2 text-center border-b-[1px] text-xs border-b-gray-700 font-normal text-gray-700">
                             <div class="flex flex-row gap-x-2 justify-center">
-                                <button onclick="deleteCartItem('{{ $item['id'] }}')"><i class="fa-solid fa-x fa-xl" style="color: #ff0000;"></i>
-                                </button>
+                                <button onclick="openDeleteModal('{{ url('/'.  $item['id'] . '/cart/delete') }}')" class="bg-red-500 hover:bg-red-700 text-white font-bold w-24 py-2 px-4 rounded">Delete</button>
+                            </button>
                             </div>
                         </td>
                     </tr>

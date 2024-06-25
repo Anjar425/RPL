@@ -114,9 +114,9 @@ class CartController extends Controller
         ]);
     }
 
-    public function delete(Request $request)
+    public function delete($id)
     {
-        $productId = $request->input('product_id');
+        $productId = $id;
         $cartItems = session()->get('cart', []);
 
         // Validasi apakah produk ada di keranjang
@@ -128,7 +128,7 @@ class CartController extends Controller
         unset($cartItems[$productId]);
         session()->put('cart', $cartItems);
 
-        return response()->json(['success' => true, 'message' => 'Produk berhasil dihapus dari keranjang']);
+        return redirect('/cashier/cart');
     }
 
     public function checkout(Request $request)
