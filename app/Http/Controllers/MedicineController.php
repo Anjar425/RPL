@@ -198,7 +198,4 @@ class MedicineController extends Controller
         return view('AdminCashier.ExpireMedicine.index', compact('expireMedicine'));
     }
 
-    public function detail()
-    {
-    }
 }

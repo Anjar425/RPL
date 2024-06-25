@@ -111,4 +111,21 @@ class CartController extends Controller
             'totalCost' => $totalCost
         ]);
     }
+
+    public function delete(Request $request)
+    {
+        $productId = $request->input('product_id');
+        $cartItems = session()->get('cart', []);
+
+        // Validasi apakah produk ada di keranjang
+        if (!isset($cartItems[$productId])) {
+            return response()->json(['success' => false, 'message' => 'Produk tidak ditemukan di keranjang.'], 404);
+        }
+
+        // Hapus item dari keranjang
+        unset($cartItems[$productId]);
+        session()->put('cart', $cartItems);
+
+        return response()->json(['success' => true, 'message' => 'Produk berhasil dihapus dari keranjang']);
+    }
 }
